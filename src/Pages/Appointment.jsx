@@ -4,7 +4,7 @@ import { Calendar, Clock, User, Mail, Phone, Scissors, ArrowLeft, CheckCircle2 }
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { createBooking } from "../Store/Features/bookings/bookingSlice";
-import PayPopup from "../Products/productPages/PayPopup"; // reuse the same verified Paystack popup
+import PayPopup from "../Products/productPages/Paypopup"; // reuse the same verified Paystack popup
 
 const SERVICES = {
   massage:  { name: "Massage Therapy",     price: 250 },

@@ -5,7 +5,7 @@ import { ArrowLeft, MapPin, CreditCard, Smartphone, Landmark } from 'lucide-reac
 import { nextStep, prevStep } from '../../Store/Features/check/CheckoutSlice';
 import { clearCart } from '../../Store/Features/cart/cartSlice';
 import { createOrder } from '../../Store/Features/orders/orderSlice';
-import PayPopup from './PayPopup.jsx';
+import PayPopup from './Paypopup.jsx';
 import { SHIPPING_METHODS, TAX_RATE } from './checkoutConstants';
 import { useNavigate } from 'react-router-dom';
 
