@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // src/components/HeroSection.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
@@ -80,55 +81,9 @@ const QUICK_LINKS = [
     icon: <Package size={20} />, 
     text: "TRACK YOUR ORDER", 
     subtext: "Stay up to date", 
-    link: "/order-tracking/:id" 
+    link: "/order-tracking" 
   }
 ];
-
-// // Flash Sale Items
-// const FLASH_SALE_ITEMS = [
-//   { 
-//     id: 1, 
-//     name: "Product 1", 
-//     price: 99.99, 
-//     discount: 58, 
-//     image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=200&h=200&fit=crop" 
-//   },
-//   { 
-//     id: 2, 
-//     name: "Product 2", 
-//     price: 149.99, 
-//     discount: 17, 
-//     image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=200&h=200&fit=crop" 
-//   },
-//   { 
-//     id: 3, 
-//     name: "Product 3", 
-//     price: 79.99, 
-//     discount: 51, 
-//     image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=200&h=200&fit=crop" 
-//   },
-//   { 
-//     id: 4, 
-//     name: "Product 4", 
-//     price: 199.99, 
-//     discount: 47, 
-//     image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=200&h=200&fit=crop" 
-//   },
-//   { 
-//     id: 5, 
-//     name: "Product 5", 
-//     price: 89.99, 
-//     discount: 50, 
-//     image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=200&h=200&fit=crop" 
-//   },
-//   { 
-//     id: 6, 
-//     name: "Product 6", 
-//     price: 129.99, 
-//     discount: 43, 
-//     image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=200&h=200&fit=crop" 
-//   }
-// ];
 
 // Service Features
 const SERVICE_FEATURES = [
@@ -160,7 +115,6 @@ const SERVICE_FEATURES = [
 
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [timeLeft, setTimeLeft] = useState({ hours: 2, minutes: 47, seconds: 19 });
   const [isPaused, setIsPaused] = useState(false);
   const slideInterval = useRef(null);
 
@@ -171,33 +125,12 @@ export default function HeroSection() {
         setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
       }, 5000);
     }
-    return () => clearInterval(slideInterval.current);
+    return () => {
+      if (slideInterval.current) {
+        clearInterval(slideInterval.current);
+      }
+    };
   }, [isPaused]);
-
-  // Countdown timer for flash sales
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(prev => {
-        let { hours, minutes, seconds } = prev;
-        seconds--;
-        if (seconds < 0) {
-          seconds = 59;
-          minutes--;
-          if (minutes < 0) {
-            minutes = 59;
-            hours--;
-            if (hours < 0) {
-              hours = 0;
-              minutes = 0;
-              seconds = 0;
-            }
-          }
-        }
-        return { hours, minutes, seconds };
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
@@ -206,8 +139,6 @@ export default function HeroSection() {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + HERO_IMAGES.length) % HERO_IMAGES.length);
   };
-
-  const pad = (num) => String(num).padStart(2, '0');
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -331,53 +262,6 @@ export default function HeroSection() {
           ))}
         </div>
       </div>
-
-      {/* Flash Sales Section
-      <div className="max-w-7xl mx-auto px-4 mt-8 md:mt-12">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 md:mb-6">
-          <div className="flex items-center gap-3 md:gap-4">
-            <Zap className="text-orange-500" size={24} />
-            <h2 className="text-xl md:text-2xl font-bold text-gray-800">Flash Sales</h2>
-          </div>
-          <div className="flex items-center gap-2 bg-red-100 px-3 py-1.5 rounded-lg">
-            <Clock className="text-red-600" size={16} />
-            <span className="text-red-600 font-bold text-sm">
-              Time Left: {pad(timeLeft.hours)}h : {pad(timeLeft.minutes)}m : {pad(timeLeft.seconds)}s
-            </span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
-          {FLASH_SALE_ITEMS.map((item) => (
-            <div key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="relative">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-32 sm:h-40 md:h-48 object-cover"
-                />
-                <span className="absolute top-2 right-2 bg-red-500 text-white px-1.5 py-0.5 rounded-lg text-xs font-bold">
-                  -{item.discount}%
-                </span>
-              </div>
-              <div className="p-2 md:p-3">
-                <h3 className="text-xs md:text-sm font-medium text-gray-700 truncate">{item.name}</h3>
-                <div className="flex items-center gap-1 md:gap-2 mt-1 md:mt-2">
-                  <span className="text-sm md:text-lg font-bold text-orange-600">
-                    GHS {(item.price * (1 - item.discount / 100)).toFixed(2)}
-                  </span>
-                  <span className="text-[10px] md:text-sm text-gray-400 line-through">
-                    GHS {item.price.toFixed(2)}
-                  </span>
-                </div>
-                <button className="w-full mt-2 md:mt-3 bg-orange-500 hover:bg-orange-600 text-white py-1.5 md:py-2 rounded-lg font-semibold text-xs md:text-sm transition-colors">
-                  Shop Now
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div> */}
 
       {/* Service Features */}
       <div className="max-w-7xl mx-auto px-4 mt-8 md:mt-12 mb-6 md:mb-8">

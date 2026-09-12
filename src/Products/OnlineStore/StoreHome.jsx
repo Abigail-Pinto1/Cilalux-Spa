@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../Store/Features/product/productSlice";
 import { addToCart } from "../../Store/Features/cart/cartSlice"; // ← correct import
-import HeroSection from "./StoreSections/heroSection";
+import HeroSection from "./StoreSections/HeroSection";
 // import TrustBar from "./StoreSections/TrustBar";
 import CategorySection from "./StoreSections/CategorySection";
 import FlashSale from "./StoreSections/FlashSale";
